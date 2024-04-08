@@ -22,7 +22,7 @@ class Plants(Resource):
         return make_response(plants_dict, 200)
     
     def post(self):
-        new_plant = Plant(name=request.get_json('name'), image=request.get_json('image'), price=request.get_json('price'))
+        new_plant = Plant(name=request.json.get('name'), image=request.json.get('image'), price=request.json.get('price'))
         db.session.add(new_plant)
         db.session.commit()
 
@@ -30,6 +30,13 @@ class Plants(Resource):
         response = make_response(plant_dict, 201)
         return response
 # Take note on why you use the get_json() method, this allows our front end to work with our back end to pass the data in the correct format so it could be processed correctly. This is used in place of the .json.get('') variation. THIS IS IMPORTANT!
+        # new_plant = Plant(name=request.get_json('name'), image=request.get_json('image'), price=request.get_json('price'))
+        # db.session.add(new_plant)
+        # db.session.commit()
+
+        # plant_dict = new_plant.to_dict()
+        # response = make_response(plant_dict, 201)
+        # return response
 
     
 api.add_resource(Plants, '/plants')
